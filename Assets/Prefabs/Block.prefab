@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6934196689262989059}
   - component: {fileID: -8948234596360080406}
+  - component: {fileID: 2480127228629958465}
   m_Layer: 0
   m_Name: Block
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 186598371902487841}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.4, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48,6 +49,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a443cbb6d887c149b9f16f95c816d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2480127228629958465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186598371902487841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278e3ac28739cdd47bcb0c903b9f6604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  columnPositionsX:
+  - -2
+  - -1.2
+  - -0.4
+  - 0.4
+  - 1.2
+  - 2
+  defaultY: 2
+  boardManager: {fileID: 0}
+  onDragStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1202644884495509278
 GameObject:
   m_ObjectHideFlags: 0

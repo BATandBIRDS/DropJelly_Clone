@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class BlockLogic : MonoBehaviour
-{
+{// Attached to Prefabs/Block
     public enum BlockColor { Red, Green, Blue, Yellow }
 
     private readonly BlockColor[] validColors = { BlockColor.Red, BlockColor.Green, BlockColor.Blue, BlockColor.Yellow };
