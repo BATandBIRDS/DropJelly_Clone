@@ -27,7 +27,7 @@ public class BlockLogic : MonoBehaviour
 
     void Start()
     {
-        SetRandomBlockColors();
+        SetRandomBlockColors(); //for testing
     }
 
     void SetRandomBlockColors()

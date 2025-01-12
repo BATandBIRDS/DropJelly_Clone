@@ -55,7 +55,7 @@ public class InputHandler : MonoBehaviour
 
         // When released, get the column index and place block
         int columnIndex = GetCurrentColumnIndex();
-        if (boardManager.CanPlaceInColumn(columnIndex))
+        if (boardManager.CanPlaceInSlot(5,columnIndex))
         {
             boardManager.PlaceBlockInColumn(columnIndex, gameObject);
         }

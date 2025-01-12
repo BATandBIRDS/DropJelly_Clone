@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class BoardManager : MonoBehaviour
 {
@@ -36,15 +37,15 @@ public class BoardManager : MonoBehaviour
     {
         if (!isInitialized) return;
 
-        int r = 0;
-        bool pass = !board[r, col].GetComponent<SlotAvailability>().IsAvailable;
-        while (r < 6 && pass)
-        {
-            r++;
-        }
+        int row = 0;
 
-        board[r, col].GetComponent<SlotAvailability>().IsAvailable = false;
-        StartCoroutine(SmoothAttachToParent(block, board[r, col].transform));
+        while (!CanPlaceInSlot(row,col)) 
+        {
+            row++;
+        } ;
+
+        board[row, col].GetComponent<SlotAvailability>().IsAvailable = false;
+        StartCoroutine(SmoothAttachToParent(block, board[row, col].transform));
     }
 
     private IEnumerator SmoothAttachToParent(GameObject block, Transform targetParent)
@@ -76,12 +77,12 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public bool CanPlaceInColumn(int col)
+    public bool CanPlaceInSlot(int row, int col)
     {
         if (!isInitialized) return false;
 
-        if (col < 0 || col >= 6) return false;
+        if (row < 0 || row >= 6 && col < 0 || col >= 6) return false;
 
-        return board[5, col].GetComponent<SlotAvailability>().IsAvailable;
+        return board[row, col].GetComponent<SlotAvailability>().IsAvailable;
     }
 }
