@@ -12,6 +12,8 @@ public class BlockLogic : MonoBehaviour
     // Add references to sprite renderers
     private SpriteRenderer[] spriteRenderers;
 
+    [SerializeField] Vector3 spawnPosition = new Vector3(0, 2.5f, 0);
+
     void Awake()
     {
         // Get all child sprite renderers
@@ -27,7 +29,18 @@ public class BlockLogic : MonoBehaviour
 
     void Start()
     {
-        SetRandomBlockColors(); //for testing
+        // Set Initial Position Position
+        transform.position = spawnPosition;
+    }
+
+    public void SpawnNewBlock()
+    {
+        // Create the new block and store the reference
+        GameObject newBlock = Instantiate(gameObject, spawnPosition, Quaternion.identity);
+
+        // Get the BlockLogic component of the new instance and set its colors
+        BlockLogic newBlockLogic = newBlock.GetComponent<BlockLogic>();
+        newBlockLogic.SetRandomBlockColors();
     }
 
     void SetRandomBlockColors()
@@ -100,4 +113,9 @@ public class BlockLogic : MonoBehaviour
             _ => Color.white
         };
     }
+
+    public BlockColor LeftTopColor { get { return block[1, 0]; } }
+    public BlockColor LeftBotColor { get { return block[0, 0]; } }
+    public BlockColor RightTopColor { get {return block[1, 1]; } }
+    public BlockColor RightBotColor { get {return block[0, 1]; } }
 }

@@ -55,11 +55,7 @@ public class InputHandler : MonoBehaviour
 
         // When released, get the column index and place block
         int columnIndex = GetCurrentColumnIndex();
-        if (boardManager.CanPlaceInSlot(5,columnIndex))
-        {
-            boardManager.PlaceBlockInColumn(columnIndex, gameObject);
-        }
-
+        boardManager.PlaceBlockInColumn(columnIndex, gameObject);
         isDraggable = false;
         onDragEnd?.Invoke();
     }
@@ -108,4 +104,5 @@ public class InputHandler : MonoBehaviour
 
         return closestIndex;
     }
+
 }
