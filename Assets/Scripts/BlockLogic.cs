@@ -20,11 +20,11 @@ public class BlockLogic : MonoBehaviour
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         // Validate we have exactly 4 sprites
-        if (spriteRenderers.Length != 4)
-        {
-            Debug.LogError("Block must have exactly 4 sprite children!");
-            return;
-        }
+        //if (spriteRenderers.Length != 4)
+        //{
+        //    Debug.LogError("Block must have exactly 4 sprite children!");
+        //    return;
+        //}
     }
 
     void Start()
@@ -36,6 +36,8 @@ public class BlockLogic : MonoBehaviour
 
     public void SpawnNewBlock()
     {
+        if (InputHandler.IsProcessing) return; // Don't spawn if processing
+
         // Create the new block and store the reference
         GameObject newBlock = Instantiate(gameObject, spawnPosition, Quaternion.identity);
 
@@ -88,16 +90,16 @@ public class BlockLogic : MonoBehaviour
             }
 
         } while (!validConfiguration);
-        LogColors();
+        //LogColors();
     }
 
-    public void LogColors()
-    {
-        string colorInfo = $"Block at {transform.position}:\n" +
-            $"LeftTop: {LeftTopColor}, RightTop: {RightTopColor}\n" +
-            $"LeftBot: {LeftBotColor}, RightBot: {RightBotColor}";
-        Debug.Log(colorInfo);
-    }
+    //public void LogColors()
+    //{
+    //    string colorInfo = $"Block at {transform.position}:\n" +
+    //        $"LeftTop: {LeftTopColor}, RightTop: {RightTopColor}\n" +
+    //        $"LeftBot: {LeftBotColor}, RightBot: {RightBotColor}";
+    //    Debug.Log(colorInfo);
+    //}
 
     private void FillBlockWithColor(BlockColor color)
     {

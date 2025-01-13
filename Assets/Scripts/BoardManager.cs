@@ -47,7 +47,8 @@ public class BoardManager : MonoBehaviour
 
     public void PlaceBlockInColumn(int col, GameObject block)
     {
-        if (!isInitialized)
+
+        if (!isInitialized || InputHandler.IsProcessing)
         {
             Debug.LogError("Board not initialized!");
             return;
@@ -65,26 +66,23 @@ public class BoardManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Placing block at position [{row}, {col}]");
+        //Debug.Log($"Placing block at position [{row}, {col}]");
         slotAvailabilities[row, col].IsAvailable = false;
         blockLogics[row, col] = block.GetComponent<BlockLogic>();
-        if (blockLogics[row, col] == null)
-        {
-            Debug.LogError("Failed to get BlockLogic component!");
-        }
+        //if (blockLogics[row, col] == null){ Debug.LogError("Failed to get BlockLogic component!"); }
         StartCoroutine(SmoothAttachToParent(block, board[row, col].transform));
     }
 
     private IEnumerator SmoothAttachToParent(GameObject block, Transform targetParent)
     {
-        Debug.Log("Starting SmoothAttachToParent");
+        //Debug.Log("Starting SmoothAttachToParent");
         if (block == null || targetParent == null)
         {
-            Debug.LogError("Block or targetParent is null!");
+            //Debug.LogError("Block or targetParent is null!");
             yield break;
         }
 
-        float duration = 0.8f;
+        float duration = 0.8f; // looks the same with the original game
         float elapsedTime = 0;
         Vector3 startPosition = block.transform.position;
         Vector3 targetPosition = targetParent.position;
@@ -93,7 +91,7 @@ public class BoardManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
-            t = 1f - Mathf.Pow(1f - t, 3f);
+            t = 1f - Mathf.Pow(1f - t, 3f); // Smoothing the movement.
             block.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
             yield return null;
         }
@@ -101,10 +99,10 @@ public class BoardManager : MonoBehaviour
         block.transform.position = targetPosition;
         block.transform.parent = targetParent;
 
-        Debug.Log("Block movement complete, waiting before check");
+        //Debug.Log("Block movement complete, waiting before check");
         yield return new WaitForSeconds(0.1f);
 
-        Debug.Log("Calling CheckNeighborSlots");
+        //Debug.Log("Calling CheckNeighborSlots");
         CheckNeighborSlots(); // This line might not be executing
     }
 
@@ -129,22 +127,22 @@ public class BoardManager : MonoBehaviour
 
                 Debug.Log($"Checking block at [{row}, {col}]");
                 BlockLogic currentBlock = blockLogics[row, col];
-                currentBlock.LogColors();
+                //currentBlock.LogColors(); // for Debug
 
                 // Check Left
                 if (col > 0 && blockLogics[row, col - 1] != null)
                 {
                     BlockLogic leftNeighbor = blockLogics[row, col - 1];
-                    Debug.Log($"Checking left neighbor - Current LT:{currentBlock.LeftTopColor} vs Neighbor RT:{leftNeighbor.RightTopColor}");
+                    //Debug.Log($"Checking left neighbor - Current LT:{currentBlock.LeftTopColor} vs Neighbor RT:{leftNeighbor.RightTopColor}");
 
                     if (currentBlock.LeftTopColor == leftNeighbor.RightTopColor)
                     {
-                        Debug.Log("Match found on Left Top!");
+                        //Debug.Log("Match found on Left Top!");
                         StartCoroutine(HandleColorMatch(currentBlock, leftNeighbor, "lt", "left"));
                     }
                     if (currentBlock.LeftBotColor == leftNeighbor.RightBotColor)
                     {
-                        Debug.Log("Match found on Left Bottom!");
+                        //Debug.Log("Match found on Left Bottom!");
                         StartCoroutine(HandleColorMatch(currentBlock, leftNeighbor, "lb", "left"));
                     }
                 }
@@ -153,16 +151,16 @@ public class BoardManager : MonoBehaviour
                 if (col < 5 && blockLogics[row, col + 1] != null)
                 {
                     BlockLogic rightNeighbor = blockLogics[row, col + 1];
-                    Debug.Log($"Checking right neighbor - Current RT:{currentBlock.RightTopColor} vs Neighbor LT:{rightNeighbor.LeftTopColor}");
+                    //Debug.Log($"Checking right neighbor - Current RT:{currentBlock.RightTopColor} vs Neighbor LT:{rightNeighbor.LeftTopColor}");
 
                     if (currentBlock.RightTopColor == rightNeighbor.LeftTopColor)
                     {
-                        Debug.Log("Match found on Right Top!");
+                        //Debug.Log("Match found on Right Top!");
                         StartCoroutine(HandleColorMatch(currentBlock, rightNeighbor, "rt", "right"));
                     }
                     if (currentBlock.RightBotColor == rightNeighbor.LeftBotColor)
                     {
-                        Debug.Log("Match found on Right Bottom!");
+                        //Debug.Log("Match found on Right Bottom!");
                         StartCoroutine(HandleColorMatch(currentBlock, rightNeighbor, "rb", "right"));
                     }
                 }
@@ -171,16 +169,16 @@ public class BoardManager : MonoBehaviour
                 if (row > 0 && blockLogics[row - 1, col] != null)
                 {
                     BlockLogic bottomNeighbor = blockLogics[row - 1, col];
-                    Debug.Log($"Checking bottom neighbor - Current LB:{currentBlock.LeftBotColor} vs Neighbor LT:{bottomNeighbor.LeftTopColor}");
+                    //Debug.Log($"Checking bottom neighbor - Current LB:{currentBlock.LeftBotColor} vs Neighbor LT:{bottomNeighbor.LeftTopColor}");
 
                     if (currentBlock.LeftBotColor == bottomNeighbor.LeftTopColor)
                     {
-                        Debug.Log("Match found on Left Bottom!");
+                        //Debug.Log("Match found on Left Bottom!");
                         StartCoroutine(HandleColorMatch(currentBlock, bottomNeighbor, "lb", "bot"));
                     }
                     if (currentBlock.RightBotColor == bottomNeighbor.RightTopColor)
                     {
-                        Debug.Log("Match found on Right Bottom!");
+                        //Debug.Log("Match found on Right Bottom!");
                         StartCoroutine(HandleColorMatch(currentBlock, bottomNeighbor, "rb", "bot"));
                     }
                 }
@@ -189,16 +187,16 @@ public class BoardManager : MonoBehaviour
                 if (row < 5 && blockLogics[row + 1, col] != null)
                 {
                     BlockLogic topNeighbor = blockLogics[row + 1, col];
-                    Debug.Log($"Checking top neighbor - Current LT:{currentBlock.LeftTopColor} vs Neighbor LB:{topNeighbor.LeftBotColor}");
+                    //Debug.Log($"Checking top neighbor - Current LT:{currentBlock.LeftTopColor} vs Neighbor LB:{topNeighbor.LeftBotColor}");
 
                     if (currentBlock.LeftTopColor == topNeighbor.LeftBotColor)
                     {
-                        Debug.Log("Match found on Left Top!");
+                        //Debug.Log("Match found on Left Top!");
                         StartCoroutine(HandleColorMatch(currentBlock, topNeighbor, "lt", "top"));
                     }
                     if (currentBlock.RightTopColor == topNeighbor.RightBotColor)
                     {
-                        Debug.Log("Match found on Right Top!");
+                        //Debug.Log("Match found on Right Top!");
                         StartCoroutine(HandleColorMatch(currentBlock, topNeighbor, "rt", "top"));
                     }
                 }
@@ -206,25 +204,25 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private void CheckColorMatch(BlockLogic.BlockColor color1, BlockLogic.BlockColor color2, string position, string direction)
-    {
-        if (color1 == color2)
-        {
-            Debug.Log($"{position}-{direction}");
-        }
-    }
+    //private void CheckColorMatch(BlockLogic.BlockColor color1, BlockLogic.BlockColor color2, string position, string direction)
+    //{
+    //    if (color1 == color2)
+    //    {
+    //        Debug.Log($"{position}-{direction}");
+    //    }
+    //}
 
     private SpriteRenderer GetMatchingSprite(BlockLogic block, string position)
     {
         SpriteRenderer[] sprites = block.GetComponentsInChildren<SpriteRenderer>();
         switch (position)
         {
-            case "lt": return sprites[2];  // SingleColor128_0 (2)
-            case "rt": return sprites[3];  // SingleColor128_0 (3)
             case "lb": return sprites[0];  // SingleColor128_0
             case "rb": return sprites[1];  // SingleColor128_0 (1)
+            case "lt": return sprites[2];  // SingleColor128_0 (2)
+            case "rt": return sprites[3];  // SingleColor128_0 (3)
             default:
-                Debug.LogError($"Invalid position: {position}");
+                //Debug.LogError($"Invalid position: {position}");
                 return null;
         }
     }
@@ -234,12 +232,12 @@ public class BoardManager : MonoBehaviour
         SpriteRenderer[] sprites = block.GetComponentsInChildren<SpriteRenderer>();
         switch (position)
         {
-            case "lt": return sprites[3];  // For left-top, get right-top
-            case "rt": return sprites[2];  // For right-top, get left-top
-            case "lb": return sprites[1];  // For left-bottom, get right-bottom
             case "rb": return sprites[0];  // For right-bottom, get left-bottom
+            case "lb": return sprites[1];  // For left-bottom, get right-bottom
+            case "rt": return sprites[2];  // For right-top, get left-top
+            case "lt": return sprites[3];  // For left-top, get right-top
             default:
-                Debug.LogError($"Invalid position: {position}");
+                //Debug.LogError($"Invalid position: {position}");
                 return null;
         }
     }
@@ -255,7 +253,9 @@ public class BoardManager : MonoBehaviour
     private IEnumerator HandleColorMatch(BlockLogic currentBlock, BlockLogic neighborBlock,
     string position, string direction)
     {
-        Debug.Log($"HandleColorMatch started - position: {position}, direction: {direction}");
+        InputHandler.IsProcessing = true; // Prevent new blocks
+
+        //Debug.Log($"HandleColorMatch started - position: {position}, direction: {direction}");
 
         // Get the matching sprites
         SpriteRenderer sprite1 = GetMatchingSprite(currentBlock, position);
@@ -263,13 +263,13 @@ public class BoardManager : MonoBehaviour
 
         if (sprite1 == null || sprite2 == null)
         {
-            Debug.LogError($"Sprites null - sprite1: {sprite1}, sprite2: {sprite2}");
+            //Debug.LogError($"Sprites null - sprite1: {sprite1}, sprite2: {sprite2}");
             yield break;
         }
 
         Color originalColor1 = sprite1.color;
         Color originalColor2 = sprite2.color;
-        Debug.Log($"Original colors - sprite1: {originalColor1}, sprite2: {originalColor2}");
+        //Debug.Log($"Original colors - sprite1: {originalColor1}, sprite2: {originalColor2}");
 
         // Turn white for 0.6 seconds
         sprite1.color = Color.white;
@@ -282,7 +282,7 @@ public class BoardManager : MonoBehaviour
 
         if (localNeighbor1 == null || localNeighbor2 == null)
         {
-            Debug.LogError($"Local neighbors null - neighbor1: {localNeighbor1}, neighbor2: {localNeighbor2}");
+            //Debug.LogError($"Local neighbors null - neighbor1: {localNeighbor1}, neighbor2: {localNeighbor2}");
             sprite1.color = originalColor1;
             sprite2.color = originalColor2;
             yield break;
@@ -290,7 +290,7 @@ public class BoardManager : MonoBehaviour
 
         Color newColor1 = localNeighbor1.color;
         Color newColor2 = localNeighbor2.color;
-        Debug.Log($"New colors - from localNeighbor1: {newColor1}, from localNeighbor2: {newColor2}");
+        //Debug.Log($"New colors - from localNeighbor1: {newColor1}, from localNeighbor2: {newColor2}");
 
         // Apply the new colors
         sprite1.color = newColor1;
@@ -299,6 +299,92 @@ public class BoardManager : MonoBehaviour
         // Update the BlockLogic colors
         UpdateBlockColors(currentBlock, position, GetColorFromUnityColor(newColor1));
         UpdateBlockColors(neighborBlock, GetOppositePosition(position, direction), GetColorFromUnityColor(newColor2));
+
+        // Check if blocks should be removed
+        yield return new WaitForSeconds(0.2f); // Small delay to ensure colors are updated
+
+
+        // Check blocks separately and only if they still exist
+        if (currentBlock != null && currentBlock.gameObject != null)
+            yield return StartCoroutine(CheckAndRemoveBlocks(currentBlock));
+
+        if (neighborBlock != null && neighborBlock.gameObject != null)
+            yield return StartCoroutine(CheckAndRemoveBlocks(neighborBlock));
+
+        InputHandler.IsProcessing = false; // Allow new blocks again
+    }
+
+    private IEnumerator CheckAndRemoveBlocks(BlockLogic block)
+    {
+        if (block == null || block.gameObject == null) yield break;
+
+        // Store position before destroying
+        Vector3 blockPosition = block.transform.position;
+
+        // Check if all colors are the same
+        BlockLogic.BlockColor firstColor = block.LeftTopColor;
+        if (block.RightTopColor == firstColor &&
+            block.LeftBotColor == firstColor &&
+            block.RightBotColor == firstColor)
+        {
+            //Debug.Log("Found block with all same colors - removing");
+
+            // Update arrays before destroying
+            for (int row = 0; row < 6; row++)
+            {
+                for (int col = 0; col < 6; col++)
+                {
+                    if (blockLogics[row, col] == block)
+                    {
+                        // Clear references first
+                        blockLogics[row, col] = null;
+                        slotAvailabilities[row, col].IsAvailable = true;
+                    }
+                }
+            }
+
+            // Fade out effect
+            SpriteRenderer[] sprites = block.GetComponentsInChildren<SpriteRenderer>();
+            float duration = 0.5f;
+            float elapsed = 0;
+
+            while (elapsed < duration)
+            {
+                if (block == null) yield break;
+
+                elapsed += Time.deltaTime;
+                float alpha = 1 - (elapsed / duration);
+
+                foreach (var sprite in sprites)
+                {
+                    if (sprite != null)
+                    {
+                        Color color = sprite.color;
+                        color.a = alpha;
+                        sprite.color = color;
+                    }
+                }
+
+                yield return null;
+            }
+
+            // Find the block's position in the array
+            for (int row = 0; row < 6; row++)
+            {
+                for (int col = 0; col < 6; col++)
+                {
+                    if (blockLogics[row, col] == block)
+                    {
+                        blockLogics[row, col] = null;
+                        slotAvailabilities[row, col].IsAvailable = true;
+                    }
+                }
+            }
+
+            // Destroy the block
+            if (block != null && block.gameObject != null)
+                Destroy(block.gameObject);
+        }
     }
 
     // Add this helper method to convert Unity Color back to BlockColor

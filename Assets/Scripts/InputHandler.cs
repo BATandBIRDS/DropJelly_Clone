@@ -7,9 +7,9 @@ public class InputHandler : MonoBehaviour
     private Camera mainCamera;
     private bool isDraggable = true;
     private Vector3 targetPosition;
-    private float smoothSpeed = 15f; // Adjust this value to change movement speed
+    private float smoothSpeed = 15f; // Adjust this value to change movement speed (15f is kinda ideal)
 
-    [SerializeField] private float[] columnPositionsX = { -2f, -1.2f, -0.4f, 0.4f, 1.2f, 2f };
+    [SerializeField] private float[] columnPositionsX = { -2f, -1.2f, -0.4f, 0.4f, 1.2f, 2f }; // best looking X positions
     [SerializeField] private float defaultY = 2f;
     [SerializeField] private BoardManager boardManager;
 
@@ -28,9 +28,12 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    private static bool isProcessing = false;
+    public static bool IsProcessing { get { return isProcessing; } set { isProcessing = value; } }
+
     private void OnMouseDown()
     {
-        if (!isDraggable) return;
+        if (!isDraggable || isProcessing) return;
 
         onDragStart?.Invoke();
         StartCoroutine(DragRoutine());
