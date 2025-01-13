@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8869927073230245439}
-  - component: {fileID: 2543478682141346473}
+  - component: {fileID: 5623430670119475289}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2543478682141346473
+--- !u!114 &5623430670119475289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,5 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: 8794046809044125192, guid: 816ec4fe54871c84091b55097cf9b366, type: 3}
-  blockPrefab: {fileID: 186598371902487841, guid: 9d51eb99ec6115c4dbc094c6c981bee0, type: 3}
-  spawnPosition: {x: 0, y: 2.5, z: 0}
+  isInitialized: 0

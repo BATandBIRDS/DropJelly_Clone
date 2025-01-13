@@ -31,6 +31,7 @@ public class BlockLogic : MonoBehaviour
     {
         // Set Initial Position Position
         transform.position = spawnPosition;
+        SetRandomBlockColors(); // Initialize colors on start
     }
 
     public void SpawnNewBlock()
@@ -87,6 +88,15 @@ public class BlockLogic : MonoBehaviour
             }
 
         } while (!validConfiguration);
+        LogColors();
+    }
+
+    public void LogColors()
+    {
+        string colorInfo = $"Block at {transform.position}:\n" +
+            $"LeftTop: {LeftTopColor}, RightTop: {RightTopColor}\n" +
+            $"LeftBot: {LeftBotColor}, RightBot: {RightBotColor}";
+        Debug.Log(colorInfo);
     }
 
     private void FillBlockWithColor(BlockColor color)
@@ -116,6 +126,22 @@ public class BlockLogic : MonoBehaviour
 
     public BlockColor LeftTopColor { get { return block[1, 0]; } }
     public BlockColor LeftBotColor { get { return block[0, 0]; } }
-    public BlockColor RightTopColor { get {return block[1, 1]; } }
-    public BlockColor RightBotColor { get {return block[0, 1]; } }
+    public BlockColor RightTopColor { get { return block[1, 1]; } }
+    public BlockColor RightBotColor { get { return block[0, 1]; } }
+
+    public void SetColors(int index, BlockColor color)
+    {
+        int row = index / 2;
+        int col = index % 2;
+        block[row, col] = color;
+
+        // Also update the sprite color
+        if (spriteRenderers != null && spriteRenderers.Length > index)
+        {
+            spriteRenderers[index].color = GetUnityColor(color);
+        }
+    }
+
+
+
 }

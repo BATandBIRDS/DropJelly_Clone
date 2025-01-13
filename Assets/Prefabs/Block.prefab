@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6934196689262989059}
-  - component: {fileID: -8948234596360080406}
-  - component: {fileID: 2480127228629958465}
   - component: {fileID: 2890346579591982706}
+  - component: {fileID: 7080997384880514021}
+  - component: {fileID: 7882226706220514808}
   m_Layer: 0
   m_Name: Block
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 186598371902487841}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38,58 +38,6 @@ Transform:
   - {fileID: 5628437691352064742}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8948234596360080406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186598371902487841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a443cbb6d887c149b9f16f95c816d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPosition: {x: 0, y: 2.5, z: 0}
---- !u!114 &2480127228629958465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186598371902487841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 278e3ac28739cdd47bcb0c903b9f6604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  columnPositionsX:
-  - -2
-  - -1.2
-  - -0.4
-  - 0.4
-  - 1.2
-  - 2
-  defaultY: 2
-  boardManager: {fileID: 2543478682141346473, guid: 0ad78a97d2fe574478168914737ae39b, type: 3}
-  onDragStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onDragEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -8948234596360080406}
-        m_TargetAssemblyTypeName: BlockLogic, Assembly-CSharp
-        m_MethodName: SpawnNewBlock
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!61 &2890346579591982706
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -136,6 +84,38 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
+--- !u!114 &7080997384880514021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186598371902487841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a443cbb6d887c149b9f16f95c816d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPosition: {x: 0, y: 2.4, z: 0}
+--- !u!114 &7882226706220514808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186598371902487841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278e3ac28739cdd47bcb0c903b9f6604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardManager: {fileID: 5623430670119475289, guid: 0ad78a97d2fe574478168914737ae39b, type: 3}
+  onDragStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1202644884495509278
 GameObject:
   m_ObjectHideFlags: 0

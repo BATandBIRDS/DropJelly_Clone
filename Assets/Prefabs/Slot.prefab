@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2862558008890321521}
   - component: {fileID: 1993348035347809729}
-  - component: {fileID: 8915911261544425560}
+  - component: {fileID: -8922667531618357164}
   m_Layer: 0
   m_Name: Slot
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8915911261544425560
+--- !u!114 &-8922667531618357164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,3 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed9295add0bf884e97e847c09ccc935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAvailable: 1
